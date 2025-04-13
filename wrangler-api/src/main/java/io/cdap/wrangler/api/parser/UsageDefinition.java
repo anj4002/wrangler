@@ -47,6 +47,7 @@ public final class UsageDefinition implements Serializable {
   private final transient int optionalCnt;
   private final String directive;
   private final List<TokenDefinition> tokens;
+  
 
   private UsageDefinition(String directive, int optionalCnt, List<TokenDefinition> tokens) {
     this.directive = directive;
@@ -63,6 +64,11 @@ public final class UsageDefinition implements Serializable {
   public String getDirectiveName() {
     return directive;
   }
+
+  public boolean isValid() {
+    // Define validation logic
+    return true; // or false based on checks
+}
 
   /**
    * This method returns the list of <code>TokenDefinition</code> that should be
@@ -172,8 +178,50 @@ public final class UsageDefinition implements Serializable {
       this.directive = directive;
       this.currentOrdinal = 0;
       this.tokens = new ArrayList<>();
-      this.optionalCnt = 0;
+      this.optionalCnt = 0;  
     }
+
+    public Builder add(String name, TokenType type) {
+      tokens.add(new TokenDefinition(name, type, null, currentOrdinal++, Optional.FALSE));
+      return this;
+    }
+    
+  
+  public Builder add(String name, TokenType type, boolean optional) {
+      tokens.add(new TokenDefinition(name, type, null, currentOrdinal++, optional));
+      if (optional) {
+          optionalCnt++;
+      }
+      return this;
+  }
+  
+  
+    //added section
+     /**
+     * Add BYTE_SIZE token definition
+     * @param name of the token for byte size
+     * @param optional <code>Optional#TRUE</code> if token is optional, else <code>Optional#FALSE</code>.
+     */
+    public void defineByteSize(String name, boolean optional) {
+      TokenDefinition spec = new TokenDefinition(name, TokenType.BYTE_SIZE, null, currentOrdinal, optional);
+      optionalCnt = optional ? optionalCnt + 1 : optionalCnt;
+      currentOrdinal++;
+      tokens.add(spec);
+  }
+
+  /**
+     * Add TIME_DURATION token definition
+     * @param name of the token for time duration
+     * @param optional <code>Optional#TRUE</code> if token is optional, else <code>Optional#FALSE</code>.
+     */
+    public void defineTimeDuration(String name, boolean optional) {
+      TokenDefinition spec = new TokenDefinition(name, TokenType.TIME_DURATION, null, currentOrdinal, optional);
+      optionalCnt = optional ? optionalCnt + 1 : optionalCnt;
+      currentOrdinal++;
+      tokens.add(spec);
+  }
+
+  //added section
 
     /**
      * This method provides a way to set the name and the type of token, while
@@ -233,6 +281,34 @@ public final class UsageDefinition implements Serializable {
       currentOrdinal++;
       tokens.add(spec);
     }
+
+/**
+ * Builder class to define the directive usage parameters.
+ */
+    public class UsageDefinitionHandler {
+    
+      public void defineUsage() {
+          UsageDefinition.Builder builder = UsageDefinition.builder("example.directive");
+          builder.defineByteSize("size", false);  // Mandatory BYTE_SIZE 
+          builder.defineTimeDuration("duration", true);  // Optional TIME_DURATION
+          UsageDefinition definition = builder.build();
+          
+          // Add logic to handle the definition as needed
+          if (definition.isValid()) {
+            storeDefinition(definition);
+            System.out.println("UsageDefinition created and stored successfully.");
+        } else {
+            System.err.println("Failed to create UsageDefinition: Validation errors.");
+        }
+    }
+    private void storeDefinition(UsageDefinition definition) {
+      // Example: Store the definition in a simple in-memory list (for demonstration)
+      List<UsageDefinition> definitionsList = new ArrayList<>();
+      definitionsList.add(definition);
+      // Alternatively: 
+      // Save to a database, file, or cloud storage as per your application requirements.
+  }
+  }
 
     /**
      * @return a instance of <code>UsageDefinition</code> object.

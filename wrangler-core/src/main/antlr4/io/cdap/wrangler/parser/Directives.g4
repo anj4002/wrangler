@@ -67,6 +67,10 @@ directive
   )*?
   ;
 
+  //Adding the new parser rules
+  byteSizeArg: BYTE_SIZE ;
+  timeDurationArg: TIME_DURATION ;
+
 ifStatement
   : ifStat elseIfStat* elseStat? '}'
   ;
@@ -199,6 +203,15 @@ identifierList
 /*
  * Following are the Lexer Rules used for tokenizing the recipe.
  */
+
+// Adding these for BYTE_SIZE and TIME_DURATION
+BYTE_SIZE: [0-9]+ ( 'KB' | 'MB' | 'GB' ) ;
+TIME_DURATION: [0-9]+ ( 'ms' | 's' | 'm' | 'h' ) ;
+
+//Adding helper fragments
+fragment BYTE_UNIT: 'KB' | 'MB' | 'GB';
+fragment TIME_UNIT: 'ms' | 's' | 'm' | 'h';
+
 OBrace   : '{';
 CBrace   : '}';
 SColon   : ';';

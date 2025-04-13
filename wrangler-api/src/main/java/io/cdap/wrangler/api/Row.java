@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 /**
  * Row defines the schema and data on which the wrangler will operate upon.
  */
@@ -223,7 +224,7 @@ public final class Row implements Serializable {
     }
   }
 
-  /**
+ /**
    * Adds or sets the value to the beginning.
    *
    * @param index at which the column need to be inserted.
@@ -241,6 +242,10 @@ public final class Row implements Serializable {
       }
     }
   }
+
+  public void put(String name, long value) {
+    addOrSet(name, value);
+}
 
   @Override
   public boolean equals(Object o) {

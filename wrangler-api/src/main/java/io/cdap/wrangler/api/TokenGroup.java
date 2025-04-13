@@ -43,6 +43,10 @@ public final class TokenGroup {
     tokens.add(token);
   }
 
+  public void addToken(Token token) {
+    tokens.add(token);
+}
+
   public int size() {
     return tokens.size();
   }

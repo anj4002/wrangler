@@ -14,28 +14,28 @@
  *  the License.
  */
 
-package io.cdap.wrangler.test.api;
+ package io.cdap.wrangler.test.api;
 
-import io.cdap.wrangler.api.Row;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * A simple class for collecting rows to be used for testing wrangler directives.
- */
-public class TestRows {
-  private final List<Row> rows;
-
-  public TestRows() {
-    this.rows = new ArrayList<>();
-  }
-
-  public void add(Row row) {
-    rows.add(row);
-  }
-
-  public List<Row> toList() {
-    return rows;
-  }
-}
+ import io.cdap.wrangler.api.Row;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+ /**
+  * A simple class for collecting rows to be used for testing wrangler directives.
+  */
+ public class TestRows {
+   private final List<Row> rows;
+ 
+   public TestRows() {
+     this.rows = new ArrayList<>();
+   }
+ 
+   public void add(Row row) {
+     rows.add(row);
+   }
+ 
+   public List<Row> toList() {
+     return rows;
+   }
+ }

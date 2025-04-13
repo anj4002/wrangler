@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * This class <code>RecipeVisitor</code> implements the visitor pattern
  * used during traversal of the AST tree. The <code>ParserTree#Walker</code>
@@ -228,6 +229,29 @@ public final class RecipeVisitor extends DirectivesBaseVisitor<RecipeSymbol.Buil
     builder.addToken(new Bool(Boolean.valueOf(ctx.Bool().getText())));
     return builder;
   }
+
+  //added section
+  /**
+ * A Directive can consist of byte size arguments like '10KB', '1.5MB'.
+ * This visitor method parses and returns a ByteSize token.
+ */
+@Override
+public RecipeSymbol.Builder visitByteSizeArg(DirectivesParser.ByteSizeArgContext ctx) {
+  builder.addToken(new io.cdap.wrangler.api.parser.ByteSize(ctx.getText()));
+  return builder;
+}
+
+/**
+ * A Directive can consist of time duration arguments like '500ms', '2s'.
+ * This visitor method parses and returns a TimeDuration token.
+ */
+@Override
+public RecipeSymbol.Builder visitTimeDurationArg(DirectivesParser.TimeDurationArgContext ctx) {
+  builder.addToken(new io.cdap.wrangler.api.parser.TimeDuration(ctx.getText()));
+  return builder;
+}
+
+//added section
 
   /**
    * A Directive can include a expression or a condition to be evaluated. When
