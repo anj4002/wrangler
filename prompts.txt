@@ -1,0 +1,120 @@
+✅ 1. Forking and Setup
+Prompt Used:
+
+“How do I fork a GitHub repo and keep my branch synced with the upstream (data-integrations/wrangler)? Explain best practices.”
+
+Purpose:
+To properly fork the CDAP Wrangler repo, sync with upstream, and prepare a working feature branch for development.
+
+✅ 2. Lexer Grammar Modification (Directives.g4)
+Prompt Used:
+
+“How do I write ANTLR4 lexer rules to parse units like ‘10KB’, ‘1.5MB’, and ‘250ms’? Include BYTE_UNIT and TIME_UNIT fragments.”
+
+Purpose:
+To define custom lexer tokens BYTE_SIZE and TIME_DURATION, enabling the grammar to understand human-readable units.
+
+✅ 3. Grammar Rule Update & Parser Method
+Prompt Used:
+
+“In ANTLR4, how do I modify a grammar to accept custom tokens like BYTE_SIZE and TIME_DURATION in directive arguments?”
+
+Follow-up Prompt:
+
+“How do I regenerate ANTLR parser and lexer files in a Maven-based project?”
+
+Purpose:
+To add new parser rules (byteSizeArg, timeDurationArg) and regenerate parser/lexer using mvn compile.
+
+✅ 4. API Update – ByteSize and TimeDuration Classes
+Prompt Used:
+
+“How do I implement a Java class to parse a string like ‘1.5MB’ and convert it to bytes using a Token interface?”
+
+Follow-up Prompt:
+
+“Create a similar class for parsing time durations like ‘200ms’, ‘2.1s’, ‘3min’ and convert them to nanoseconds.”
+
+Purpose:
+To implement ByteSize.java and TimeDuration.java in the wrangler-api module with canonical value conversion methods.
+
+✅ 5. TokenType Enum & UsageDefinition
+Prompt Used:
+
+“How can I extend a Java enum to support new token types like BYTE_SIZE and TIME_DURATION in a parser framework?”
+
+Follow-up Prompt:
+
+“Add a fluent .add(String, TokenType) method to a builder pattern for defining usage tokens.”
+
+Purpose:
+To register the new token types and allow intuitive argument specification in directive definitions.
+
+✅ 6. Core Parser Enhancements (Visit Methods)
+Prompt Used:
+
+“How do I override visit methods in an ANTLR4 visitor class to support new token parsing and return custom Java objects?”
+
+Purpose:
+To implement visitor logic like visitByteSizeArg() and visitTimeDurationArg() in the Wrangler directive parser.
+
+✅ 7. Implementing AggregateStats Directive
+Prompt Used:
+
+“How do I write a custom CDAP Wrangler directive that accepts token arguments and performs aggregation?”
+
+Follow-up Prompt:
+
+“How to use ExecutorContext Store in a directive to accumulate values during row processing and finalize after aggregation?”
+
+Purpose:
+To build the AggregateStats directive handling byte size and time duration aggregation across rows.
+
+✅ 8. Unit Testing: Token Parsers
+Prompt Used:
+
+“Write JUnit tests for a ByteSize class to test parsing and getBytes for inputs like ‘1KB’, ‘2.5MB’, ‘300B’.”
+
+Follow-up Prompt:
+
+“Write similar unit tests for TimeDuration with inputs like ‘200ms’, ‘1.5s’, ‘3min’ and validate nanosecond conversion.”
+
+Purpose:
+To validate the robustness of the parsers against varied unit formats.
+
+✅ 9. Parser Tests – GrammarBasedParserTest
+Prompt Used:
+
+“How to write unit tests for ANTLR parser rules to validate input like ‘10KB’, ‘2s’ are accepted and parsed into tokens?”
+
+Purpose:
+To ensure the grammar correctly accepts and processes custom unit tokens.
+
+✅ 10. AggregateStats Directive Tests
+Prompt Used:
+
+“How do I test a custom Wrangler directive that performs aggregation? I want to assert sum of byte sizes and durations.”
+
+Follow-up Prompt:
+
+“Write a JUnit test using TestingRig for a directive like ‘aggregate-stats’ and verify results using tolerance.”
+
+Purpose:
+To simulate real-world rows, run them through the recipe engine, and validate aggregated values.
+
+✅ 11. Final Project Cleanup & Checkstyle
+Prompt Used:
+
+“How to fix common checkstyle issues in Java like unused imports, missing Javadoc, trailing spaces, and line length?”
+
+Purpose:
+To ensure all files comply with checkstyle.xml and Maven builds pass validation.
+
+✅ 12. README.md Documentation
+Prompt Used:
+
+“Write a README section explaining the new BYTE_SIZE and TIME_DURATION token parsers added to CDAP Wrangler with usage examples.”
+
+Purpose:
+To provide clear documentation for future developers and evaluators on how to use the new enhancements.
+
